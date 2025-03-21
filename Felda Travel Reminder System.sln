@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35728.132
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Felda Travel Reminder System", "Felda Travel Reminder System.csproj", "{BF4E7C72-28CA-4641-92B4-BF2D9F69E7DC}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Felda Travel Reminder System Installation", "..\Felda Travel Reminder System Installation\Felda Travel Reminder System Installation.vdproj", "{9549C67F-549E-4B86-8A2D-635CA07E3898}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BF4E7C72-28CA-4641-92B4-BF2D9F69E7DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF4E7C72-28CA-4641-92B4-BF2D9F69E7DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF4E7C72-28CA-4641-92B4-BF2D9F69E7DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF4E7C72-28CA-4641-92B4-BF2D9F69E7DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9549C67F-549E-4B86-8A2D-635CA07E3898}.Debug|Any CPU.ActiveCfg = Debug
+		{9549C67F-549E-4B86-8A2D-635CA07E3898}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
