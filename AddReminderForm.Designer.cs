@@ -40,7 +40,7 @@
             this.RemarksTextBox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.TickAllCheckBox = new System.Windows.Forms.GroupBox();
-            this.TimePickerComboBox = new System.Windows.Forms.ComboBox();
+            this.TimePicker = new System.Windows.Forms.DateTimePicker();
             this.TickAllBox = new System.Windows.Forms.CheckBox();
             this.DayCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -153,7 +153,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(16, 434);
+            this.label11.Location = new System.Drawing.Point(16, 418);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(174, 20);
             this.label11.TabIndex = 22;
@@ -181,7 +181,7 @@
             // 
             // TickAllCheckBox
             // 
-            this.TickAllCheckBox.Controls.Add(this.TimePickerComboBox);
+            this.TickAllCheckBox.Controls.Add(this.TimePicker);
             this.TickAllCheckBox.Controls.Add(this.TickAllBox);
             this.TickAllCheckBox.Controls.Add(this.DayCheckedListBox);
             this.TickAllCheckBox.Controls.Add(this.label12);
@@ -189,120 +189,26 @@
             this.TickAllCheckBox.Controls.Add(this.AddNotificationButton);
             this.TickAllCheckBox.Location = new System.Drawing.Point(20, 288);
             this.TickAllCheckBox.Name = "TickAllCheckBox";
-            this.TickAllCheckBox.Size = new System.Drawing.Size(524, 117);
+            this.TickAllCheckBox.Size = new System.Drawing.Size(524, 111);
             this.TickAllCheckBox.TabIndex = 18;
             this.TickAllCheckBox.TabStop = false;
             this.TickAllCheckBox.Text = "Add Notification";
             // 
-            // TimePickerComboBox
+            // TimePicker
             // 
-            this.TimePickerComboBox.FormattingEnabled = true;
-            this.TimePickerComboBox.Items.AddRange(new object[] {
-            "00:00",
-            "00:15",
-            "00:30",
-            "00:45",
-            "01:00",
-            "01:15",
-            "01:30",
-            "01:45",
-            "02:00",
-            "02:15",
-            "02:30",
-            "02:45",
-            "03:00",
-            "03:15",
-            "03:30",
-            "03:45",
-            "04:00",
-            "04:15",
-            "04:30",
-            "04:45",
-            "05:00",
-            "05:15",
-            "05:30",
-            "05:45",
-            "06:00",
-            "06:15",
-            "06:30",
-            "06:45",
-            "07:00",
-            "07:15",
-            "07:30",
-            "07:45",
-            "08:00",
-            "08:15",
-            "08:30",
-            "08:45",
-            "09:00",
-            "09:15",
-            "09:30",
-            "09:45",
-            "10:00",
-            "10:15",
-            "10:30",
-            "10:45",
-            "11:00",
-            "11:15",
-            "11:30",
-            "11:45",
-            "12:00",
-            "12:15",
-            "12:30",
-            "12:45",
-            "13:00",
-            "13:15",
-            "13:30",
-            "13:45",
-            "14:00",
-            "14:15",
-            "14:30",
-            "14:45",
-            "15:00",
-            "15:15",
-            "15:30",
-            "15:45",
-            "16:00",
-            "16:15",
-            "16:30",
-            "16:45",
-            "17:00",
-            "17:15",
-            "17:30",
-            "17:45",
-            "18:00",
-            "18:15",
-            "18:30",
-            "18:45",
-            "19:00",
-            "19:15",
-            "19:30",
-            "19:45",
-            "20:00",
-            "20:15",
-            "20:30",
-            "20:45",
-            "21:00",
-            "21:15",
-            "21:30",
-            "21:45",
-            "22:00",
-            "22:15",
-            "22:30",
-            "22:45",
-            "23:00",
-            "23:15",
-            "23:30",
-            "23:45"});
-            this.TimePickerComboBox.Location = new System.Drawing.Point(6, 50);
-            this.TimePickerComboBox.Name = "TimePickerComboBox";
-            this.TimePickerComboBox.Size = new System.Drawing.Size(159, 24);
-            this.TimePickerComboBox.TabIndex = 26;
+            this.TimePicker.Checked = false;
+            this.TimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.TimePicker.Location = new System.Drawing.Point(10, 45);
+            this.TimePicker.Name = "TimePicker";
+            this.TimePicker.ShowUpDown = true;
+            this.TimePicker.Size = new System.Drawing.Size(159, 22);
+            this.TimePicker.TabIndex = 0;
+            this.TimePicker.Value = new System.DateTime(2025, 3, 22, 12, 30, 0, 0);
             // 
             // TickAllBox
             // 
             this.TickAllBox.AutoSize = true;
-            this.TickAllBox.Location = new System.Drawing.Point(179, 45);
+            this.TickAllBox.Location = new System.Drawing.Point(281, 50);
             this.TickAllBox.Name = "TickAllBox";
             this.TickAllBox.Size = new System.Drawing.Size(73, 20);
             this.TickAllBox.TabIndex = 25;
@@ -321,28 +227,28 @@
             "Friday",
             "Saturday",
             "Sunday"});
-            this.DayCheckedListBox.Location = new System.Drawing.Point(261, 17);
+            this.DayCheckedListBox.Location = new System.Drawing.Point(363, 14);
             this.DayCheckedListBox.Name = "DayCheckedListBox";
-            this.DayCheckedListBox.Size = new System.Drawing.Size(257, 89);
+            this.DayCheckedListBox.Size = new System.Drawing.Size(150, 89);
             this.DayCheckedListBox.TabIndex = 24;
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(190, 17);
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(301, 18);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(65, 20);
+            this.label12.Size = new System.Drawing.Size(56, 18);
             this.label12.TabIndex = 23;
             this.label12.Text = "Day(s):";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(6, 27);
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(10, 22);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(51, 20);
+            this.label8.Size = new System.Drawing.Size(45, 18);
             this.label8.TabIndex = 19;
             this.label8.Text = "Time:";
             // 
@@ -352,7 +258,7 @@
             this.AddNotificationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AddNotificationButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AddNotificationButton.ForeColor = System.Drawing.Color.White;
-            this.AddNotificationButton.Location = new System.Drawing.Point(6, 78);
+            this.AddNotificationButton.Location = new System.Drawing.Point(10, 73);
             this.AddNotificationButton.Name = "AddNotificationButton";
             this.AddNotificationButton.Size = new System.Drawing.Size(159, 30);
             this.AddNotificationButton.TabIndex = 17;
@@ -366,9 +272,9 @@
             this.NotificationListFlowLayoutPanel.BackColor = System.Drawing.Color.White;
             this.NotificationListFlowLayoutPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.NotificationListFlowLayoutPanel.ForeColor = System.Drawing.Color.Black;
-            this.NotificationListFlowLayoutPanel.Location = new System.Drawing.Point(20, 457);
+            this.NotificationListFlowLayoutPanel.Location = new System.Drawing.Point(20, 441);
             this.NotificationListFlowLayoutPanel.Name = "NotificationListFlowLayoutPanel";
-            this.NotificationListFlowLayoutPanel.Size = new System.Drawing.Size(524, 135);
+            this.NotificationListFlowLayoutPanel.Size = new System.Drawing.Size(524, 151);
             this.NotificationListFlowLayoutPanel.TabIndex = 14;
             // 
             // StatusComboBox
@@ -500,7 +406,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.CheckedListBox DayCheckedListBox;
         private System.Windows.Forms.CheckBox TickAllBox;
-        private System.Windows.Forms.ComboBox TimePickerComboBox;
+        private System.Windows.Forms.DateTimePicker TimePicker;
         //private NotificationList notificationList2;
     }
 }

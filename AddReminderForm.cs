@@ -77,6 +77,10 @@ namespace Felda_Travel_Reminder_System
 
         private void AddReminderForm_Load(object sender, EventArgs e)
         {
+            // Set DateTimePicker format to show HH:mm AM/PM without seconds
+            TimePicker.Format = DateTimePickerFormat.Custom;
+            TimePicker.CustomFormat = "hh:mm tt";
+
             // Set DateTimePicker format to only show date
             StartsAtDateTimePicker.Format = DateTimePickerFormat.Custom;
             StartsAtDateTimePicker.CustomFormat = "dddd, dd MMM yyyy"; // Shows Day and Date
@@ -230,13 +234,9 @@ namespace Felda_Travel_Reminder_System
 
         private void AddNotificationButton_Click(object sender, EventArgs e)
         {
-            if (TimePickerComboBox.SelectedItem == null)
-            {
-                MessageBox.Show("Please select a time before adding a notification.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            // Save selected time in 12-hour format (HH:mm AM/PM)
+            string selectedTime = TimePicker.Value.ToString("hh:mm tt");
 
-            string selectedTime = TimePickerComboBox.SelectedItem.ToString();
             List<string> selectedDays = new List<string>();
 
             foreach (object item in DayCheckedListBox.CheckedItems)
@@ -256,8 +256,6 @@ namespace Felda_Travel_Reminder_System
                 if (notification.GetTime() == selectedTime)
                 {
                     List<string> existingDays = notification.GetDays();
-
-                    // Filter out days that are already selected
                     List<string> newDays = selectedDays.Except(existingDays).ToList();
 
                     if (newDays.Count == 0)
@@ -266,14 +264,13 @@ namespace Felda_Travel_Reminder_System
                         return;
                     }
 
-                    // Merge new days with existing days and update the NotificationList UI
                     existingDays.AddRange(newDays);
                     notification.UpdateDays(existingDays);
-                    return; // Exit after updating the existing NotificationList
+                    return;
                 }
             }
 
-            // Create and add NotificationList control to the panel (Not saving to DB yet)
+            // Add Notification to UI
             NotificationList notificationItem = new NotificationList(eventId ?? -1, selectedTime, selectedDays, this);
             NotificationListFlowLayoutPanel.Controls.Add(notificationItem);
         }
@@ -323,41 +320,6 @@ namespace Felda_Travel_Reminder_System
 
                 connection.Close();
             }
-        }
-
-
-
-        private void LoadEventDataFromDatabase(int eventId)
-        {
-            string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FeldaTravelReminder", "reminder.db");
-            string connectionString = $"Data Source={dbPath};Version=3;";
-
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
-            {
-                connection.Open();
-                string query = "SELECT name, remarks, starts_at, ends_at, category, status FROM event WHERE Id = @id";
-
-                using (SQLiteCommand command = new SQLiteCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@id", eventId);
-
-                    using (SQLiteDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            NameTextBox.Text = reader["name"].ToString();
-                            RemarksTextBox.Text = reader["remarks"].ToString();
-                            CategoryComboBox.SelectedItem = reader["category"].ToString();
-                            StatusComboBox.SelectedItem = reader["status"].ToString();
-                            StartsAtDateTimePicker.Value = Convert.ToDateTime(reader["starts_at"]);
-                            EndsAtDateTimePicker.Value = Convert.ToDateTime(reader["ends_at"]);
-                        }
-                    }
-                }
-                connection.Close();
-            }
-
-            LoadNotifications(); // Load associated notifications
         }
 
         private void TickAllBox_CheckedChanged(object sender, EventArgs e)

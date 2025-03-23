@@ -57,7 +57,7 @@ namespace Felda_Travel_Reminder_System
         private void Timer_Tick(object sender, EventArgs e)
         {
             // Update time in 24-hour format
-            CurrentTimeLabel.Text = DateTime.Now.ToString("HH:mm:ss");
+            CurrentTimeLabel.Text = DateTime.Now.ToString("hh:mm:ss tt");
 
             // Update date in "Day, dd/MM/yyyy" format
             CurrentDateLabel.Text = DateTime.Now.ToString("dddd, dd/MM/yyyy");
@@ -72,7 +72,7 @@ namespace Felda_Travel_Reminder_System
         private void CheckAndShowNotifications()
         {
             string currentDay = DateTime.Now.ToString("dddd");
-            string currentTime = DateTime.Now.ToString("HH:mm");
+            string currentTime = DateTime.Now.ToString("hh:mm tt");
 
             string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FeldaTravelReminder", "reminder.db");
             string connectionString = $"Data Source={dbPath};Version=3;";
@@ -80,10 +80,13 @@ namespace Felda_Travel_Reminder_System
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                string query = @"SELECT e.name, e.ends_at 
-                FROM notification n 
-                INNER JOIN event e ON n.event_id = e.id 
-                WHERE n.day = @currentDay AND n.time = @currentTime;";
+                string query = @"
+            SELECT e.name, e.ends_at, e.status 
+            FROM notification n 
+            INNER JOIN event e ON n.event_id = e.id 
+            WHERE n.day = @currentDay 
+              AND n.time = @currentTime 
+              AND (e.status = 'Ongoing' OR e.status = 'Not Started Yet');"; // Only show for valid statuses
 
                 using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 {
@@ -97,12 +100,13 @@ namespace Felda_Travel_Reminder_System
                             string eventName = reader["name"].ToString();
                             DateTime endsAt = Convert.ToDateTime(reader["ends_at"]);
                             int daysLeft = (endsAt.Date - DateTime.Now.Date).Days;
+                            string status = reader["status"].ToString();
 
-                            string dueDate = endsAt.ToString("dd/MM/yyyy");
-                            string message = $"Event: {eventName}\nDue Date: {dueDate}\nDays Left: {daysLeft}";
-
-                            // Call the method to show each notification separately
-                            ShowReminderNotification(eventName, dueDate, daysLeft);
+                            if (status == "Ongoing" || status == "Not Started Yet") // Double-checking, just in case
+                            {
+                                string dueDate = endsAt.ToString("dd/MM/yyyy");
+                                ShowReminderNotification(eventName, dueDate, daysLeft);
+                            }
                         }
                     }
                 }
@@ -118,58 +122,61 @@ namespace Felda_Travel_Reminder_System
         // Create a separate method to generate unique notifications
         private void ShowReminderNotification(string eventName, string dueDate, int daysLeft)
         {
-            NotifyIcon notification = new NotifyIcon
-            {
-                Icon = SystemIcons.Information,
-                Visible = true,
-                BalloonTipTitle = "Event Reminder",
-                BalloonTipText = $"Event: {eventName}\nDue Date: {dueDate}\nDays Left: {daysLeft}"
-            };
-
-            // Store the notification to prevent it from being garbage collected
-            activeNotifications.Add(notification);
+            ShowNotification.BalloonTipTitle = "Event Reminder";
+            ShowNotification.BalloonTipText = $"Event: {eventName}\nDue Date: {dueDate}\nDays Left: {daysLeft}";
+            ShowNotification.Visible = true;
 
             // Show the notification
-            notification.ShowBalloonTip(5000); // Show for 5 seconds
+            ShowNotification.ShowBalloonTip(5000);
 
-            // Event: When notification is clicked, open the main menu
-            notification.BalloonTipClicked += (sender, e) => OpenMainMenu();
-
-            // Dispose of it properly after it's closed
-            notification.BalloonTipClosed += (sender, e) =>
+            // Ensure clicking the notification brings MainMenuForm to front
+            ShowNotification.BalloonTipClicked += (sender, e) =>
             {
-                notification.Dispose();
-                activeNotifications.Remove(notification); // Remove from list to free memory
+                this.Invoke((MethodInvoker)delegate
+                {
+                    this.Show();
+                    this.WindowState = FormWindowState.Normal;
+                    this.ShowInTaskbar = true;
+                    this.TopMost = true;  // Set to topmost
+                    this.BringToFront();
+                    this.Activate();
+                    this.TopMost = false; // Reset to avoid interfering with other apps
+                });
             };
         }
 
         private void MainMenuForm_Load(object sender, EventArgs e)
         {
-            TitlePanel.Paint += new PaintEventHandler(TitlePanel_Paint); // Attach Paint Event
-            TitlePanel.Refresh(); // Redraw panel
+            TitlePanel.Paint += new PaintEventHandler(TitlePanel_Paint);
+            TitlePanel.Refresh();
             LoadReminders();
-            SetStartup(true);
+            this.Text = "Felda Travel Reminder System";
 
-            // Ensure ShowNotification is visible
+            // Ensure the NotifyIcon is visible
             ShowNotification.Visible = true;
-            ShowNotification.Text = "Reminder System";
+            ShowNotification.Text = "Felda Travel Reminder System";
 
-            // Restore window when double-clicked
+            // Restore window when double-clicked in tray
             ShowNotification.DoubleClick += (s, ev) => OpenMainMenu();
 
             // Create context menu for NotifyIcon
             ContextMenuStrip contextMenu = new ContextMenuStrip();
-
-            // "Open Reminder" option
             ToolStripMenuItem openMenuItem = new ToolStripMenuItem("Open Reminder", null, (s, ev) => OpenMainMenu());
-            contextMenu.Items.Add(openMenuItem);
-
-            // "Exit" option
             ToolStripMenuItem exitMenuItem = new ToolStripMenuItem("Exit", null, ExitApplication);
-            contextMenu.Items.Add(exitMenuItem);
 
-            // Assign the menu to the NotifyIcon
+            contextMenu.Items.Add(openMenuItem);
+            contextMenu.Items.Add(exitMenuItem);
             ShowNotification.ContextMenuStrip = contextMenu;
+
+            // **Show the form when opened from shortcut**
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+            this.BringToFront();
+            ShowInTaskbar = true;
+
+            CategoryComboBox.SelectedIndexChanged += CategoryComboBox_SelectedIndexChanged;
+            StatusComboBox.SelectedIndexChanged += StatusComboBox_SelectedIndexChanged;
+            ClearFilterButton.Click += ClearFilterButton_Click;
         }
 
         // Open the main menu
@@ -177,23 +184,27 @@ namespace Felda_Travel_Reminder_System
         {
             this.Show();
             this.WindowState = FormWindowState.Normal;
+            this.ShowInTaskbar = true; // Show in taskbar
             this.BringToFront();
         }
 
         // Minimize to system tray when the user clicks "X" (close)
-        private void MainMenuForm_FormClosing(object sender, FormClosingEventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                e.Cancel = true; // Cancel close action
+                e.Cancel = true; // Prevent the form from closing
                 this.Hide(); // Hide the form instead
+                ShowInTaskbar = false; // Remove from taskbar
+                ShowNotification.Visible = true; // Ensure the tray icon is visible
             }
         }
 
         // Exit application from tray menu
         private void ExitApplication(object sender, EventArgs e)
         {
-            ShowNotification.Dispose();
+            ShowNotification.Visible = false; // Hide the tray icon before exit
+            ShowNotification.Dispose(); // Properly dispose the icon
             Application.Exit();
         }
 
@@ -295,6 +306,49 @@ namespace Felda_Travel_Reminder_System
                 {
                     bool isVisible = reminder.GetReminderName().ToLower().Contains(searchQuery);
                     reminder.Visible = isVisible;
+                }
+            }
+        }
+
+        private void CategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CategoryComboBox.SelectedItem != null)
+            {
+                StatusComboBox.SelectedIndex = -1; // Clear StatusComboBox selection
+                FilterReminders();
+            }
+        }
+
+
+        private void StatusComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (StatusComboBox.SelectedItem != null)
+            {
+                CategoryComboBox.SelectedIndex = -1; // Clear CategoryComboBox selection
+                FilterReminders();
+            }
+        }
+
+        private void ClearFilterButton_Click(object sender, EventArgs e)
+        {
+            CategoryComboBox.SelectedIndex = -1; // Reset category filter
+            StatusComboBox.SelectedIndex = -1; // Reset status filter
+            FilterReminders(); // Reload all reminders
+        }
+
+        private void FilterReminders()
+        {
+            string selectedCategory = CategoryComboBox.SelectedItem?.ToString();
+            string selectedStatus = StatusComboBox.SelectedItem?.ToString();
+
+            foreach (Control control in ReminderFlowLayoutPanel.Controls)
+            {
+                if (control is ReminderList reminder)
+                {
+                    bool categoryMatch = string.IsNullOrEmpty(selectedCategory) || reminder.GetCategory().Equals(selectedCategory, StringComparison.OrdinalIgnoreCase);
+                    bool statusMatch = string.IsNullOrEmpty(selectedStatus) || reminder.GetStatus().Equals(selectedStatus, StringComparison.OrdinalIgnoreCase);
+
+                    reminder.Visible = categoryMatch && statusMatch;
                 }
             }
         }

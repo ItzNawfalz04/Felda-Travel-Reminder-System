@@ -49,7 +49,7 @@
             this.SelectedDaysLabel.AutoSize = true;
             this.SelectedDaysLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SelectedDaysLabel.ForeColor = System.Drawing.Color.White;
-            this.SelectedDaysLabel.Location = new System.Drawing.Point(121, 17);
+            this.SelectedDaysLabel.Location = new System.Drawing.Point(130, 17);
             this.SelectedDaysLabel.Name = "SelectedDaysLabel";
             this.SelectedDaysLabel.Size = new System.Drawing.Size(221, 16);
             this.SelectedDaysLabel.TabIndex = 2;
@@ -57,7 +57,7 @@
             // 
             // DeleteButton
             // 
-            this.DeleteButton.Location = new System.Drawing.Point(391, 8);
+            this.DeleteButton.Location = new System.Drawing.Point(404, 8);
             this.DeleteButton.Name = "DeleteButton";
             this.DeleteButton.Size = new System.Drawing.Size(80, 34);
             this.DeleteButton.TabIndex = 4;
@@ -75,7 +75,7 @@
             this.Controls.Add(this.SelectedTimesLabel);
             this.ForeColor = System.Drawing.Color.Black;
             this.Name = "NotificationList";
-            this.Size = new System.Drawing.Size(510, 50);
+            this.Size = new System.Drawing.Size(515, 50);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -33,17 +33,23 @@ namespace Felda_Travel_Reminder_System
             this.eventId = eventId;
             this.parentForm = parentForm;
 
-            SelectedTimesLabel.Text = time;
+            // Ensure time is parsed correctly and displayed in 12-hour format
+            if (DateTime.TryParseExact(time, new[] { "HH:mm", "hh:mm tt" },
+                                       System.Globalization.CultureInfo.InvariantCulture,
+                                       System.Globalization.DateTimeStyles.None, out DateTime parsedTime))
+            {
+                SelectedTimesLabel.Text = parsedTime.ToString("hh:mm tt"); // Display in 12-hour format with AM/PM
+            }
+            else
+            {
+                SelectedTimesLabel.Text = time; // Fallback
+            }
+
             // Convert full day names to three-letter abbreviations
             Dictionary<string, string> dayAbbreviations = new Dictionary<string, string>()
             {
-                { "Monday", "Mon" },
-                { "Tuesday", "Tue" },
-                { "Wednesday", "Wed" },
-                { "Thursday", "Thu" },
-                { "Friday", "Fri" },
-                { "Saturday", "Sat" },
-                { "Sunday", "Sun" }
+                { "Monday", "Mon" }, { "Tuesday", "Tue" }, { "Wednesday", "Wed" },
+                { "Thursday", "Thu" }, { "Friday", "Fri" }, { "Saturday", "Sat" }, { "Sunday", "Sun" }
             };
 
             List<string> abbreviatedDays = days

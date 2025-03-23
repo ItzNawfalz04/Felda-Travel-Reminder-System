@@ -41,10 +41,11 @@
             this.SearchTextBox = new System.Windows.Forms.TextBox();
             this.AddEventButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ClearFilterButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.StatusComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.FilterDateComboBox = new System.Windows.Forms.ComboBox();
+            this.CategoryComboBox = new System.Windows.Forms.ComboBox();
             this.ShowNotification = new System.Windows.Forms.NotifyIcon(this.components);
             this.label4 = new System.Windows.Forms.Label();
             this.TitlePanel.SuspendLayout();
@@ -156,9 +157,9 @@
             // 
             this.SearchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.SearchTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SearchTextBox.Location = new System.Drawing.Point(324, 12);
+            this.SearchTextBox.Location = new System.Drawing.Point(325, 12);
             this.SearchTextBox.Name = "SearchTextBox";
-            this.SearchTextBox.Size = new System.Drawing.Size(534, 27);
+            this.SearchTextBox.Size = new System.Drawing.Size(709, 27);
             this.SearchTextBox.TabIndex = 0;
             this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
             // 
@@ -168,7 +169,7 @@
             this.AddEventButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AddEventButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AddEventButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.AddEventButton.Location = new System.Drawing.Point(864, 7);
+            this.AddEventButton.Location = new System.Drawing.Point(864, 54);
             this.AddEventButton.Name = "AddEventButton";
             this.AddEventButton.Size = new System.Drawing.Size(170, 35);
             this.AddEventButton.TabIndex = 7;
@@ -179,22 +180,33 @@
             // groupBox1
             // 
             this.groupBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.groupBox1.Controls.Add(this.ClearFilterButton);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.StatusComboBox);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.FilterDateComboBox);
+            this.groupBox1.Controls.Add(this.CategoryComboBox);
             this.groupBox1.Location = new System.Drawing.Point(234, 54);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(380, 79);
+            this.groupBox1.Size = new System.Drawing.Size(453, 79);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Filtering";
+            this.groupBox1.Text = "Filter Reminder List";
+            // 
+            // ClearFilterButton
+            // 
+            this.ClearFilterButton.Location = new System.Drawing.Point(358, 40);
+            this.ClearFilterButton.Name = "ClearFilterButton";
+            this.ClearFilterButton.Size = new System.Drawing.Size(75, 26);
+            this.ClearFilterButton.TabIndex = 13;
+            this.ClearFilterButton.Text = "Clear";
+            this.ClearFilterButton.UseVisualStyleBackColor = true;
+            this.ClearFilterButton.Click += new System.EventHandler(this.ClearFilterButton_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(204, 21);
+            this.label3.Location = new System.Drawing.Point(182, 21);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 16);
             this.label3.TabIndex = 11;
@@ -202,18 +214,17 @@
             // 
             // StatusComboBox
             // 
+            this.StatusComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.StatusComboBox.FormattingEnabled = true;
             this.StatusComboBox.Items.AddRange(new object[] {
-            "Certificate Renewal",
-            "License Renewal",
-            "Project",
-            "Task",
-            "Other"});
-            this.StatusComboBox.Location = new System.Drawing.Point(207, 40);
+            "Not Started Yet",
+            "Ongoing",
+            "Completed"});
+            this.StatusComboBox.Location = new System.Drawing.Point(185, 40);
             this.StatusComboBox.Name = "StatusComboBox";
             this.StatusComboBox.Size = new System.Drawing.Size(156, 24);
             this.StatusComboBox.TabIndex = 12;
-            this.StatusComboBox.Text = "Filter By Status";
+            this.StatusComboBox.SelectedIndexChanged += new System.EventHandler(this.StatusComboBox_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -225,20 +236,21 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Category:";
             // 
-            // FilterDateComboBox
+            // CategoryComboBox
             // 
-            this.FilterDateComboBox.FormattingEnabled = true;
-            this.FilterDateComboBox.Items.AddRange(new object[] {
+            this.CategoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CategoryComboBox.FormattingEnabled = true;
+            this.CategoryComboBox.Items.AddRange(new object[] {
             "Certificate Renewal",
             "License Renewal",
             "Project",
             "Task",
             "Other"});
-            this.FilterDateComboBox.Location = new System.Drawing.Point(13, 40);
-            this.FilterDateComboBox.Name = "FilterDateComboBox";
-            this.FilterDateComboBox.Size = new System.Drawing.Size(156, 24);
-            this.FilterDateComboBox.TabIndex = 10;
-            this.FilterDateComboBox.Text = "Filter By Category";
+            this.CategoryComboBox.Location = new System.Drawing.Point(13, 40);
+            this.CategoryComboBox.Name = "CategoryComboBox";
+            this.CategoryComboBox.Size = new System.Drawing.Size(156, 24);
+            this.CategoryComboBox.TabIndex = 10;
+            this.CategoryComboBox.SelectedIndexChanged += new System.EventHandler(this.CategoryComboBox_SelectedIndexChanged);
             // 
             // ShowNotification
             // 
@@ -251,7 +263,7 @@
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(244, 14);
+            this.label4.Location = new System.Drawing.Point(234, 14);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(74, 20);
             this.label4.TabIndex = 13;
@@ -262,8 +274,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1041, 616);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.ReminderFlowLayoutPanel);
             this.Controls.Add(this.TitlePanel);
             this.Controls.Add(this.AddEventButton);
@@ -288,7 +300,7 @@
         private System.Windows.Forms.TextBox SearchTextBox;
         private System.Windows.Forms.Button AddEventButton;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox FilterDateComboBox;
+        private System.Windows.Forms.ComboBox CategoryComboBox;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label CurrentDateLabel;
@@ -300,6 +312,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button ClearFilterButton;
         //private ReminderList reminderList1;
     }
 }

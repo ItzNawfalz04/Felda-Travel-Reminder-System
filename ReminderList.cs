@@ -152,5 +152,15 @@ namespace Felda_Travel_Reminder_System
         {
             return EventNameLabel.Text;
         }
+
+        public string GetCategory()
+        {
+            return CategoryLabel.Text;
+        }
+
+        public string GetStatus()
+        {
+            return StatusLabel.Text;
+        }
     }
 }
