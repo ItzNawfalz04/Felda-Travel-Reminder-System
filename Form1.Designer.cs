@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
             this.ReminderFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.TitlePanel = new System.Windows.Forms.Panel();
+            this.SourceCodeButton = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.CurrentDateLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -67,6 +68,7 @@
             // 
             this.TitlePanel.BackColor = System.Drawing.Color.DarkGray;
             this.TitlePanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.TitlePanel.Controls.Add(this.SourceCodeButton);
             this.TitlePanel.Controls.Add(this.label7);
             this.TitlePanel.Controls.Add(this.CurrentDateLabel);
             this.TitlePanel.Controls.Add(this.label5);
@@ -80,16 +82,27 @@
             this.TitlePanel.TabIndex = 7;
             this.TitlePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.TitlePanel_Paint);
             // 
+            // SourceCodeButton
+            // 
+            this.SourceCodeButton.Location = new System.Drawing.Point(58, 493);
+            this.SourceCodeButton.Name = "SourceCodeButton";
+            this.SourceCodeButton.Size = new System.Drawing.Size(107, 32);
+            this.SourceCodeButton.TabIndex = 18;
+            this.SourceCodeButton.Text = "Source Code";
+            this.SourceCodeButton.UseVisualStyleBackColor = true;
+            this.SourceCodeButton.Click += new System.EventHandler(this.SourceCodeButton_Click);
+            // 
             // label7
             // 
             this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(25, 566);
+            this.label7.Location = new System.Drawing.Point(8, 531);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(173, 39);
+            this.label7.Size = new System.Drawing.Size(208, 70);
             this.label7.TabIndex = 15;
-            this.label7.Text = "© Copyright. Felda Travel Sdn Bhd.\r\nAll Right Reserved.\r\nProgram Version : v0.1";
+            this.label7.Text = "© Copyright. | All Right Reserved.\r\nFelda Travel Sdn. Bhd.\r\nProgram Version : v1." +
+    "0.1";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // CurrentDateLabel
@@ -169,11 +182,11 @@
             this.AddEventButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AddEventButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AddEventButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.AddEventButton.Location = new System.Drawing.Point(864, 54);
+            this.AddEventButton.Location = new System.Drawing.Point(832, 46);
             this.AddEventButton.Name = "AddEventButton";
-            this.AddEventButton.Size = new System.Drawing.Size(170, 35);
+            this.AddEventButton.Size = new System.Drawing.Size(202, 35);
             this.AddEventButton.TabIndex = 7;
-            this.AddEventButton.Text = "Add Reminder";
+            this.AddEventButton.Text = "Add Event Reminder";
             this.AddEventButton.UseVisualStyleBackColor = false;
             this.AddEventButton.Click += new System.EventHandler(this.AddEventButton_Click);
             // 
@@ -185,7 +198,7 @@
             this.groupBox1.Controls.Add(this.StatusComboBox);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.CategoryComboBox);
-            this.groupBox1.Location = new System.Drawing.Point(234, 54);
+            this.groupBox1.Location = new System.Drawing.Point(234, 50);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(453, 79);
             this.groupBox1.TabIndex = 8;
@@ -313,6 +326,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button ClearFilterButton;
+        private System.Windows.Forms.Button SourceCodeButton;
         //private ReminderList reminderList1;
     }
 }

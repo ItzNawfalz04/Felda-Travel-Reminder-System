@@ -147,6 +147,8 @@ namespace Felda_Travel_Reminder_System
 
         private void MainMenuForm_Load(object sender, EventArgs e)
         {
+            SetStartup(true);
+
             TitlePanel.Paint += new PaintEventHandler(TitlePanel_Paint);
             TitlePanel.Refresh();
             LoadReminders();
@@ -351,6 +353,15 @@ namespace Felda_Travel_Reminder_System
                     reminder.Visible = categoryMatch && statusMatch;
                 }
             }
+        }
+
+        private void SourceCodeButton_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "https://github.com/ItzNawfalz04/Felda-Travel-Reminder-System/",
+                UseShellExecute = true
+            });
         }
     }
 }

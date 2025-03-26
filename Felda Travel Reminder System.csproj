@@ -153,6 +153,7 @@
     <EmbeddedResource Include="ReminderList.resx">
       <DependentUpon>ReminderList.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Database\reminder.db" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
