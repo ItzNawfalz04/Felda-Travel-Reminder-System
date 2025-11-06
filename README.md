@@ -79,9 +79,3 @@ The database file is named `reminder.db`.
 ## Thank You 🙏  
 I appreciate you taking the time to check out my project. Thank you!  
 
-## Contact Me 📩
-If you have any questions or need assistance with this project (or anything else), feel free to reach out:  
-
-- 📧 [Email](mailto:muhdnawfal1573@gmail.com)  
-- 💼 [LinkedIn](https://www.linkedin.com/in/itznawfalz04/)  
-- 📸 [Instagram](https://www.instagram.com/itznawfalz04?igsh=MWEzcW4zdjBlejcyYg==)  
